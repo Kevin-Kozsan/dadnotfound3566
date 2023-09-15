@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quïzzy</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            text-align: center;
+            background-color: rgb(107, 35, 175);
+        }
+
+        h1 {
+            color: #aca71f;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #bcae18;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #quiz {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 10px;
+        }
+
+        .answers {
+            margin-bottom: 10px;
+        }
+
+        .feedback {
+            display: none;
+        }
+
+        #score {
+            display: none;
+        }ß
+    </style>
+</head>
+<body>
+    <h1>Quïzzy (yeat reference)</h1>
+    <div id="quiz"></div>
+    <div id="feedback"></div>
+    <div id="score"></div>
+    <button onclick="checkAnswer()">Volgende</button>
+
+    <script>
+        // Vragen, keuzes en juiste antwoorden
+        var vragen = [
+            {
+                vraag: "Wat is Yeat zijn beste nummer?",
+                keuzes: ["Lying 4 fun?", "Big tonka", "Kant change", "Hatër"],
+                juistAntwoord: 0
+            },
+            {
+                vraag: "Wie was er in Parijs?",
+                keuzes: ["Kylian Mbappe", "Ronaldo", "Michael Jordan", "de ander optie"],
+                juistAntwoord: 3
+            },
+            {
+                vraag: "Wie was Mark Rutte?",
+                keuzes: ["De zoon van tido Rutte", "Ministe-President van Nederland", "De main charachter", "corrupt"],
+                juistAntwoord: 1
+            },
+            {
+                vraag: "hoevaak per dag schijt ik gemiddeld?",
+                keuzes: ["6", "7", "8", "9"],
+                juistAntwoord: 1
+            },
+            {
+                vraag: "Wie is Lebron James?",
+                keuzes: ["basketbalspeler", "die gast van fortnite", "mijn sublieme koning", "een rapper"],
+                juistAntwoord: 1
+            },
+            {
+                vraag: "Hoe hoog is de inflatie in fortnite?",
+                keuzes: ["150 vbucks", "500 vbucks", "21,678 procent", "Mark Rutte"],
+                juistAntwoord: 3
+            },
+            {
+                vraag: "Wie is Travis scock?",
+                keuzes: ["Een rapper", "die gast van fornite", "een crimineel", "een basketbalspeler"],
+                juistAntwoord: 1
+            },
+            {
+                vraag: "Wie is Eren Yeager?",
+                keuzes: ["Een rapper", "Een anime personage", "ik", "die gast van forntite"],
+                juistAntwoord: 3
+
+            },
+            {
+                vraag: "Hoeveel software updates heb ik op dit moment?",
+                keuzes: ["geen", "1", "2", "9"],
+                juistAntwoord: 2
+            },{
+                vraag: "Hoeveel weegt DJ Khaled",
+                keuzes: ["70KG", "100Kg", "Tel them to bring out the whole ocean", "GOD DID"],
+                juistAntwoord: 3
+            },
+        ];
+
+        var quizElement = document.getElementById("quiz");
+        var feedbackElement = document.getElementById("feedback");
+        var scoreElement = document.getElementById("score");
+
+        var currentQuestionIndex = 0;
+        var score = 0;
+
+        // Vraag weergeven
+        function displayQuestion() {
+            var vraagDiv = document.createElement("div");
+            vraagDiv.classList.add("question");
+
+            var vraagNummer = document.createElement("span");
+            vraagNummer.innerHTML = "Vraag " + (currentQuestionIndex + 1) + ": ";
+            vraagDiv.appendChild(vraagNummer);
+
+            var vraagTekst = document.createElement("span");
+            vraagTekst.innerHTML = vragen[currentQuestionIndex].vraag;
+            vraagDiv.appendChild(vraagTekst);
+
+            var keuzesDiv = document.createElement("div");
+            keuzesDiv.classList.add("answers");
+
+            for (var i = 0; i < vragen[currentQuestionIndex].keuzes.length; i++) {
+                var keuzeLabel = document.createElement("label");
+                var keuzeInput = document.createElement("input");
+                keuzeInput.type = "radio";
+                keuzeInput.name = "antwoord";
+                keuzeInput.value = i;
+
+                keuzeLabel.appendChild(keuzeInput);
+                keuzeLabel.innerHTML += vragen[currentQuestionIndex].keuzes[i];
+
+                keuzesDiv.appendChild(keuzeLabel);
+            }
+
+            vraagDiv.appendChild(keuzesDiv);
+            quizElement.innerHTML = "";
+            quizElement.appendChild(vraagDiv);
+        }
+
+        // Antwoord controleren en feedback geven
+        function checkAnswer() {
+            var antwoordInput = document.querySelector("input[name=antwoord]:checked");
+            if (antwoordInput) {
+                var gegevenAntwoord = parseInt(antwoordInput.value);
+                var juistAntwoord = vragen[currentQuestionIndex].juistAntwoord;
+
+                if (gegevenAntwoord === juistAntwoord) {
+                    score++;
+                }
+
+                feedbackElement.innerHTML = "";
+                var vraagFeedback = document.createElement("p");
+                vraagFeedback.innerHTML = "Vraag " + (currentQuestionIndex + 1) + ": ";
+                if (gegevenAntwoord === juistAntwoord) {
+                    vraagFeedback.innerHTML += "Juist!";
+                    vraagFeedback.classList.add("correct");
+                } else {
+                    vraagFeedback.innerHTML += "Je bent dom. je bent waardeloos. Je bent niks waard";
+                    vraagFeedback.classList.add("incorrect");
+                }
+                feedbackElement.appendChild(vraagFeedback);
+                feedbackElement.style.display = "block";
+
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < vragen.length) {
+                    displayQuestion();
+                } else {
+                    endQuiz();
+                }
+            }
+        }
+
+        // Quiz afsluiten
+        function endQuiz() {
+            quizElement.style.display = "none";
+            scoreElement.style.display = "block";
+
+            scoreElement.innerHTML = "Wat een amateur je score is maar " + score + "/" + vragen.length;
+        }
+
+        // Quiz starten
+        displayQuestion();
+    </script>
+</body>
+</html>
