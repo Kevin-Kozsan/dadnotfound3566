@@ -171,7 +171,7 @@ body {
 	background-color:#7A00FE;
 }
 a {
-	color: #0088cc;
+	color: #ffffff;
 	text-decoration: none;
 }
 a:hover, a:focus {
@@ -534,10 +534,10 @@ a.text-error:hover, a.text-error:focus {
 	color: #953b39;
 }
 .text-info {
-	color: #3a87ad;
+	color: #ffffff;
 }
 a.text-info:hover, a.text-info:focus {
-	color: #2d6987;
+	color: #ffffff;
 }
 .text-success {
 	color: #468847;
@@ -559,7 +559,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: inherit;
 	font-weight: normal;
 	line-height: 20px;
-	color: inherit;
+	color: black;
 	text-rendering: optimizelegibility;
 }
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
@@ -776,7 +776,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 	background-color: #356635;
 }
 .label-info, .badge-info {
-	background-color: #3a87ad;
+	background-color: #ffffff;
 }
 .label-info[href], .badge-info[href] {
 	background-color: #000000;
@@ -1043,7 +1043,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
  transition: background-color linear .2s;
 }
 textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-	border-color: rgba(82, 168, 236, 0.8);
+	border-color: rgba(239, 241, 243, 0.8);
 	background-color: #95e09c;
 	outline: 0;
 	outline: thin dotted \9;/* IE6-9 */

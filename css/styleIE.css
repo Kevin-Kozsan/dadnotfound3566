@@ -2,13 +2,13 @@
 	background: #000;
 }
 .ss-links a:hover{
-	background: #333;
+	background: #ffffff;
 }
 h2.ss-subtitle:before{
-	background: #333;
+	background: #ffffff;
 }
 h2.ss-subtitle:after{
-	border-bottom: 4px dotted #333;
+	border-bottom: 4px dotted #ffffff;
 }
 .ss-container:before{
     background:#6B55E0;

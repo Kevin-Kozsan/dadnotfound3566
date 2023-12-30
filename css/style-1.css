@@ -91,7 +91,7 @@ ul.social-icons li a:hover {
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	text-align:center;
-	border:8px solid #203748;
+	border:8px solid #000000;
 	float:right;
 	-webkit-transition: all 0.2s linear;
 	-moz-transition: all 0.2s linear;
@@ -99,16 +99,16 @@ ul.social-icons li a:hover {
 	transition: all 0.2s linear;
 }
 .skills .ps {
-	background:#30a5dc;
+	background:#000000;
 }
 .skills .ai {
-	background:#ee742b;
+	background:#000000;
 }
 .skills .html {
-	background:#f04949;
+	background:#000000;
 }
 .skills .css {
-	background:#39d084;
+	background:#000000;
 }
 .skills .ps:hover, .skills .ai:hover, .skills .html:hover, .skills .css:hover {
 	border:8px solid #fff;
@@ -148,7 +148,7 @@ ul.social-icons li a:hover {
 }
 .ps2 {
 	width:90%;
-	background:#30a5dc;
+	background:#000000;
 	-moz-animation:html5 2s ease-out;
 	-webkit-animation:html5 2s ease-out;
 }
