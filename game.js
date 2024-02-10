@@ -12,16 +12,13 @@ let music;
 let sound;
 let soundInitialized = false;
 
-// Define minDinoY before the Dino class
-let minDinoY = 512;
-
 function preload() {
   console.log("Preloading...");
   cactusImg = loadImage("img game/cactus.png");
   dinoImg = loadImage("img game/dino-stationary.png");
   groundImg = loadImage("img game/ground.png");
 
-  music = loadSound('sound/Drake - Fair Trade (Audio) ft. Travis Scott-2.mp3', soundLoaded, soundError);
+  music = loadSound('sound/Fukashigi no KARTE.mp3', soundLoaded, soundError);
   sound = loadSound('sound/anita.mp3', soundLoaded, soundError);
 }
 
@@ -34,7 +31,7 @@ function soundError(event) {
 }
 
 function setup() {
-  createCanvas(1850, 900);
+  createCanvas(windowWidth, windowHeight);
   dino = new Dino();
   ground = new Ground();
 
@@ -61,6 +58,7 @@ function restartGame() {
   score = 0;
   cacti = [];
   dino = new Dino();
+  dino.y = windowHeight / 2.55;
   gameStarted = true;
   difficultyLevel = 1;
   elapsedTime = 0;
@@ -145,49 +143,60 @@ function draw() {
 class Dino {
   constructor() {
     this.x = 50;
-    this.y = 300;
+    this.y = windowHeight / 2.55;
     this.velocityY = 0;
     this.gravity = 0.5;
     this.height = 50;
     this.width = 50;
     this.isJumping = false;
+    this.jumpHeight = 100;
     this.currentFrame = 0;
     this.frames = [dinoImg, loadImage("img game/dino-run-0.png"), loadImage("img game/dino-run-1.png")];
   }
 
   show() {
+    if (!gameStarted || this.y > windowHeight) {
+        this.y = windowHeight / 2.55;
+        this.velocityY = 0;
+        this.isJumping = false;
+        this.currentFrame = 0;
+    }
+
     let animationSpeed = 0.2;
+
     if (this.isJumping) {
-      image(dinoImg, this.x, this.y - this.height, this.width, this.height);
+        image(dinoImg, this.x, this.y - this.height, this.width, this.height);
+        if (this.y >= windowHeight / 1.85) {
+            this.isJumping = false;  
+        }
     } else {
-      this.currentFrame = (this.currentFrame + animationSpeed) % this.frames.length;
-      image(this.frames[Math.floor(this.currentFrame)], this.x, this.y - this.height, this.width, this.height);
+        this.currentFrame = (this.currentFrame + animationSpeed) % this.frames.length;
+        image(this.frames[Math.floor(this.currentFrame)], this.x, this.y - this.height, this.width, this.height);
     }
 
     this.y += this.velocityY;
     this.velocityY += this.gravity;
 
+    const minDinoY = windowHeight / 1.85;
     if (this.y > minDinoY) {
-      this.y = minDinoY;
-      this.velocityY = 0;
+        this.y = minDinoY;
+        this.velocityY = 0;
     }
   }
 
   jump() {
-    const threshold = 1;
-
-    if (abs(this.y - minDinoY) < threshold) {
+    const minDinoY = windowHeight / 1.85;
+    if (this.y === minDinoY) {
       this.velocityY = -10;
       this.isJumping = true;
     }
   }
-
 }
 
 class Cactus {
   constructor() {
     this.x = width;
-    this.y = random(900 / 1.75, 900 / 1.80);
+    this.y = random(windowHeight / 1.75, windowHeight / 1.95); 
     this.width = 20;
     this.height = 50;
     this.velocityX = -5;
