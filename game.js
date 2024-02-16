@@ -11,9 +11,8 @@ let difficultyLevel = 1;
 let music;
 let sound;
 let soundInitialized = false;
-
-// Define minDinoY before the Dino class
-let minDinoY = 512;
+let canvas;
+let minDinoY = 225;
 
 function preload() {
   console.log("Preloading...");
@@ -21,26 +20,26 @@ function preload() {
   dinoImg = loadImage("img game/dino-stationary.png");
   groundImg = loadImage("img game/ground.png");
 
-  music = loadSound('sound/Drake - Fair Trade (Audio) ft. Travis Scott-2.mp3', soundLoaded, soundError);
-  sound = loadSound('sound/anita.mp3', soundLoaded, soundError);
-}
-
-function soundLoaded() {
-  console.log("Sound file loaded successfully!");
-}
-
-function soundError(event) {
-  console.error("Error loading sound file:", event);
+  music = loadSound('sound/Fukashigi no KARTE.mp3');
+  sound = loadSound('sound/Vine boom sound effect.mp3');
 }
 
 function setup() {
-  createCanvas(1850, 900);
+  canvas = createCanvas(600, 400);
+  canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+  centerCanvas();
+
   dino = new Dino();
   ground = new Ground();
 
   if (music) {
     music.setVolume(0.5);
   }
+}
+function centerCanvas(){
+  let x = (windowWidth - width) / 2;
+  let y = (windowHeight - height) / 2;
+  canvas.position(x, y);
 }
 
 function keyPressed() {
@@ -133,26 +132,31 @@ function draw() {
     textAlign(CENTER, CENTER);
     text("Game Over", width / 2, height / 2 - 40);
     text(`Score: ${score}`, width / 2, height / 2);
-    text("Click to Restart", width / 2, height / 2 + 40);
+    text("Klik om opnieuw te spelen!", width / 2, height / 2 + 40);
+    text("Tip")
   } else {
     fill(0);
     textSize(32);
     textAlign(CENTER, CENTER);
-    text("Press SPACE to start", width / 2, height / 2);
+    text("druk SPATIE om te beginnen!", width / 2, height / 2);
   }
 }
 
 class Dino {
   constructor() {
     this.x = 50;
-    this.y = 300;
+    this.y = 70;
     this.velocityY = 0;
     this.gravity = 0.5;
     this.height = 50;
     this.width = 50;
     this.isJumping = false;
     this.currentFrame = 0;
-    this.frames = [dinoImg, loadImage("img game/dino-run-0.png"), loadImage("img game/dino-run-1.png")];
+    this.frames = [
+      dinoImg,
+      loadImage("img game/dino-run-0.png"),
+      loadImage("img game/dino-run-1.png")
+    ];
   }
 
   show() {
@@ -161,7 +165,13 @@ class Dino {
       image(dinoImg, this.x, this.y - this.height, this.width, this.height);
     } else {
       this.currentFrame = (this.currentFrame + animationSpeed) % this.frames.length;
-      image(this.frames[Math.floor(this.currentFrame)], this.x, this.y - this.height, this.width, this.height);
+      image(
+        this.frames[Math.floor(this.currentFrame)],
+        this.x,
+        this.y - this.height,
+        this.width,
+        this.height
+      );
     }
 
     this.y += this.velocityY;
@@ -170,24 +180,24 @@ class Dino {
     if (this.y > minDinoY) {
       this.y = minDinoY;
       this.velocityY = 0;
+      this.isJumping = false;
     }
   }
 
   jump() {
     const threshold = 1;
-
     if (abs(this.y - minDinoY) < threshold) {
       this.velocityY = -10;
       this.isJumping = true;
     }
   }
-
 }
+
 
 class Cactus {
   constructor() {
     this.x = width;
-    this.y = random(900 / 1.75, 900 / 1.80);
+    this.y = random(400 / 1.75, 400 / 1.80);
     this.width = 20;
     this.height = 50;
     this.velocityX = -5;
@@ -229,7 +239,7 @@ class Ground {
   constructor() {
     this.x1 = 0;
     this.x2 = width;
-    this.y = windowHeight / 2;
+    this.y = 400 / 2;
     this.width = width;
     this.height = 30;
     this.velocityX = -5;
